@@ -8,6 +8,11 @@ public class VRInputManager : MonoBehaviour
     public VRController left_hand;
     public VRController right_hand;
 
+    public Light lampLight;
+
+    [SteamVR_DefaultAction("TrackPad")]
+    public SteamVR_Action_Vector2 trackPadAction;
+
     // Update is called once per frame
     void Update()
     {
@@ -27,6 +32,27 @@ public class VRInputManager : MonoBehaviour
         else if (SteamVR_Input._default.inActions.GrabPinch.GetLastStateUp(SteamVR_Input_Sources.RightHand))
         {
             right_hand.Release(false);
+        }
+
+        Vector2 trackPadValue = trackPadAction.GetAxis(SteamVR_Input_Sources.Any);
+
+        if (SteamVR_Input._default.inActions.Teleport.GetLastStateDown(SteamVR_Input_Sources.Any))
+        {
+            if (trackPadValue != Vector2.zero)
+            {
+                if (trackPadValue.y > 0.333f)
+                {
+                    lampLight.range += 0.2f;
+                    if (lampLight.range > 6.0f)
+                        lampLight.range = 6.0f;
+                }
+                else if (trackPadValue.y < -0.333f)
+                {
+                    lampLight.range -= 0.2f;
+                    if (lampLight.range < 0.6f)
+                        lampLight.range = 0.6f;
+                }
+            }
         }
     }
 }

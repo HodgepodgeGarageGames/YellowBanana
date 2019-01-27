@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class MeteoriteController : MonoBehaviour
 {
+    public GameObject explosion;
     public int RotationSpeed;
     public int MovingSpeed;
     private Vector3 _leftOrRight;
     private Vector3 _upOrDown;
     private GameObject Globe;
+    private AudioSource _audioSource;
+    bool isplaying = false;
 
-    public MeteoriteController()
-    {
-    }
 
     void Initialize(int rotationSpeed, int movingSpeed)
     {
@@ -34,6 +34,7 @@ public class MeteoriteController : MonoBehaviour
             _upOrDown = Vector3.down;
         }
         Globe = GameObject.Find("Globe");
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -46,10 +47,20 @@ public class MeteoriteController : MonoBehaviour
         //Meteorite Movement
         float step =  MovingSpeed * Time.deltaTime; // calculate distance to move
         transform.position = Vector3.MoveTowards(transform.position, Globe.transform.position, step);
+
+        //If we are close enough to Globe
+        float dist = Vector3.Distance(Globe.transform.position, transform.position);
+        if (dist < 2 && !isplaying)
+        {
+            isplaying = true;
+            _audioSource.Play();
+        }
+        //Then play audio source
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        Instantiate(explosion, transform.position, transform.rotation ) ;
         Destroy(gameObject);
     }
 }
