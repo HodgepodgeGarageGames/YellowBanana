@@ -6,13 +6,30 @@ public class MeteoriteController : MonoBehaviour
 {
     public GameObject explosion;
     public int RotationSpeed;
-    public int MovingSpeed;
+    public float MovingSpeed;
     private Vector3 _leftOrRight;
     private Vector3 _upOrDown;
     private GameObject Globe;
     private AudioSource _audioSource;
     bool isplaying = false;
 
+    private List<MeepleTemperature> hotList = new List<MeepleTemperature>();
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<MeepleTemperature>())
+        {
+            hotList.Add(other.GetComponent<MeepleTemperature>());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<MeepleTemperature>())
+        {
+            hotList.Remove(other.GetComponent<MeepleTemperature>());
+        }
+    }
 
     void Initialize(int rotationSpeed, int movingSpeed)
     {
@@ -60,6 +77,11 @@ public class MeteoriteController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        foreach (MeepleTemperature meep in hotList)
+        {
+            meep.get_hit_by_meteor();
+        }
+
         Instantiate(explosion, transform.position, transform.rotation ) ;
         Destroy(gameObject);
     }

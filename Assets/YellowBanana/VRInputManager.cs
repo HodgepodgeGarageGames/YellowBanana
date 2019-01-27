@@ -9,6 +9,7 @@ public class VRInputManager : MonoBehaviour
     public VRController right_hand;
 
     public Light lampLight;
+    public MeshRenderer lampBulb;
 
     [SteamVR_DefaultAction("TrackPad")]
     public SteamVR_Action_Vector2 trackPadAction;
@@ -54,5 +55,7 @@ public class VRInputManager : MonoBehaviour
                 }
             }
         }
+
+        lampBulb.material.color = new Color(lampLight.range, lampLight.range, lampLight.range, lampLight.range * 2.0f);
     }
 }
