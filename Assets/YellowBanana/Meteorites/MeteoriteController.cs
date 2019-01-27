@@ -77,12 +77,33 @@ public class MeteoriteController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        foreach (MeepleTemperature meep in hotList)
+        if (collision.gameObject.name == "Globe")
         {
-            meep.get_hit_by_meteor();
+            foreach (MeepleTemperature meep in hotList)
+            {
+                meep.get_hit_by_meteor();
+            }
+
+            Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
+        else
+        {
+            StartCoroutine(TimedDeath());
+        }
+    }
+
+    private IEnumerator TimedDeath()
+    {
+        float T = 0.0f;
+
+        while (T < 0.5f)
+        {
+            yield return null;
+            T += Time.deltaTime;
         }
 
-        Instantiate(explosion, transform.position, transform.rotation ) ;
+        Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }
