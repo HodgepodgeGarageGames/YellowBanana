@@ -4,14 +4,31 @@ using UnityEngine;
 
 public class MeteoriteController : MonoBehaviour
 {
+    public GameObject explosion;
     public int RotationSpeed;
-    public int MovingSpeed;
+    public float MovingSpeed;
     private Vector3 _leftOrRight;
     private Vector3 _upOrDown;
     private GameObject Globe;
+    private AudioSource _audioSource;
+    bool isplaying = false;
 
-    public MeteoriteController()
+    private List<MeepleTemperature> hotList = new List<MeepleTemperature>();
+
+    private void OnTriggerEnter(Collider other)
     {
+        if (other.GetComponent<MeepleTemperature>())
+        {
+            hotList.Add(other.GetComponent<MeepleTemperature>());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<MeepleTemperature>())
+        {
+            hotList.Remove(other.GetComponent<MeepleTemperature>());
+        }
     }
 
     void Initialize(int rotationSpeed, int movingSpeed)
@@ -34,6 +51,7 @@ public class MeteoriteController : MonoBehaviour
             _upOrDown = Vector3.down;
         }
         Globe = GameObject.Find("Globe");
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -46,10 +64,46 @@ public class MeteoriteController : MonoBehaviour
         //Meteorite Movement
         float step =  MovingSpeed * Time.deltaTime; // calculate distance to move
         transform.position = Vector3.MoveTowards(transform.position, Globe.transform.position, step);
+
+        //If we are close enough to Globe
+        float dist = Vector3.Distance(Globe.transform.position, transform.position);
+        if (dist <= (_audioSource.clip.length * MovingSpeed) && !isplaying)
+        {
+            isplaying = true;
+            _audioSource.Play();
+        }
+        //Then play audio source
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.name == "Globe")
+        {
+            foreach (MeepleTemperature meep in hotList)
+            {
+                meep.get_hit_by_meteor();
+            }
+
+            Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
+        else
+        {
+            StartCoroutine(TimedDeath());
+        }
+    }
+
+    private IEnumerator TimedDeath()
+    {
+        float T = 0.0f;
+
+        while (T < 0.5f)
+        {
+            yield return null;
+            T += Time.deltaTime;
+        }
+
+        Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

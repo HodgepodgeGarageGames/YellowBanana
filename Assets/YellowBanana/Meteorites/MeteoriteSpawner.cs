@@ -7,7 +7,7 @@ public class MeteoriteSpawner : MonoBehaviour
 {
     public GameObject Meteorite;
     public int RotationSpeed;
-    public int MovingSpeed;
+    public float MovingSpeed;
     public float SpawnRate = 2.0f;
     private float _timeSinceLastSpawn;
 
@@ -37,11 +37,16 @@ public class MeteoriteSpawner : MonoBehaviour
     }
  
      Vector3 RandomCircle ( Vector3 center ,   float radius  ){
-         float ang = Random.value * 360;
-         Vector3 pos;
-         pos.x = center.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad);
-         pos.y = center.y + radius * Mathf.Cos(ang * Mathf.Deg2Rad);
-         pos.z = center.z;
-         return pos;
+        /*float ang = Random.value * 360;
+        Vector3 pos;
+        pos.x = center.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad);
+        pos.y = Mathf.Abs(center.y + radius * Mathf.Cos(ang * Mathf.Deg2Rad));
+        pos.z = center.z;
+        return pos;*/
+
+        float bearing = Random.value * 360.0f;
+        float pitch = Random.value * 90.0f;
+
+        return center + (Quaternion.AngleAxis(bearing, Vector3.up) * Quaternion.AngleAxis(-pitch, Vector3.right) * Vector3.forward * radius);
      }
 }
