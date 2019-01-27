@@ -61,5 +61,10 @@ public class VRInputManager : MonoBehaviour
         }
 
         lampBulb.material.color = new Color(lampLight.range, lampLight.range, lampLight.range, lampLight.range * 2.0f);
+
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }
