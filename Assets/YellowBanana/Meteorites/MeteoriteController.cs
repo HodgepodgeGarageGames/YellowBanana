@@ -67,7 +67,7 @@ public class MeteoriteController : MonoBehaviour
 
         //If we are close enough to Globe
         float dist = Vector3.Distance(Globe.transform.position, transform.position);
-        if (dist < 2 && !isplaying)
+        if (dist <= (_audioSource.clip.length * MovingSpeed) && !isplaying)
         {
             isplaying = true;
             _audioSource.Play();

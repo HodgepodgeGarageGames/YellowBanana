@@ -134,6 +134,6 @@ public class MeepleTemperature : MonoBehaviour
 
     public void get_hit_by_meteor()
     {
-        anim.SetFloat("Temperature", anim.GetFloat("Temperature") + 0.4f);
+        anim.SetFloat("Temperature", anim.GetFloat("Temperature") + 0.6f);
     }
 }
