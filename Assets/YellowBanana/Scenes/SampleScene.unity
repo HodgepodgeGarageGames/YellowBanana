@@ -6592,7 +6592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   house_music: {fileID: 8300000, guid: 6455ee1874cac3c40bf956b880010d5b, type: 3}
-  space_music: {fileID: 8300000, guid: 78f5ed16d5972cf4e9f9d60dfc6608b0, type: 3}
+  space_music: {fileID: 8300000, guid: f02d1ab91e91947d899dcb35d6363c4e, type: 3}
 --- !u!1001 &1325210857
 PrefabInstance:
   m_ObjectHideFlags: 0
