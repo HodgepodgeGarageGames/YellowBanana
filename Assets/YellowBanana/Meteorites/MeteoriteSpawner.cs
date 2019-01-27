@@ -8,45 +8,87 @@ public class MeteoriteSpawner : MonoBehaviour
     public GameObject Meteorite;
     public int RotationSpeed;
     public float MovingSpeed;
-    public float SpawnRate = 2.0f;
-    private float _timeSinceLastSpawn;
+    public StarfieldLogic starField;
+    private float _timeForNextWave = 20.0f;
+    private float _meteoriteCount = 2;
+    private float _timeBetweenMeteorites = 1.0f;
+    private float MinXPosition = -3f;
+    private float MaxXPosition = 3f;
+    private float MinZPosition = -3.0f;
+    private float MaxZPosition = 3.0f;
 
     void Start()
-    {  
+    {
+        StartCoroutine(SpawnWaves());
     }
 
-    void Update()
+    private GameObject Spawn()
     {
-        _timeSinceLastSpawn += Time.deltaTime;
-	    if (_timeSinceLastSpawn > SpawnRate)
-	    {
-	        Spawn();
-	        _timeSinceLastSpawn = 0.0f;
-	    }
-    }
-
-    private void Spawn()
-    {
-        Vector3 position = RandomCircle(transform.position, 5.0f);
+        Vector3 position = RandomPoint(transform.position, 5.0f);
         Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, transform.position - position);
         var meteorite = Instantiate(Meteorite, position, rotation) as GameObject;
 
-        var controller =  meteorite.GetComponent<MeteoriteController>();
+        var controller = meteorite.GetComponent<MeteoriteController>();
         controller.RotationSpeed = RotationSpeed;
         controller.MovingSpeed = MovingSpeed;
+
+        return meteorite;
     }
- 
-     Vector3 RandomCircle ( Vector3 center ,   float radius  ){
-        /*float ang = Random.value * 360;
+
+    Vector3 RandomPoint(Vector3 center, float radius)
+    {
+        float ang = Random.value * 360;
         Vector3 pos;
-        pos.x = center.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad);
-        pos.y = Mathf.Abs(center.y + radius * Mathf.Cos(ang * Mathf.Deg2Rad));
-        pos.z = center.z;
-        return pos;*/
 
-        float bearing = Random.value * 360.0f;
-        float pitch = Random.value * 90.0f;
+        pos.x = Random.Range(MinXPosition, MaxXPosition);
+        pos.y = 4;
+        pos.z = Random.Range(MinZPosition, MaxZPosition);
 
-        return center + (Quaternion.AngleAxis(bearing, Vector3.up) * Quaternion.AngleAxis(-pitch, Vector3.right) * Vector3.forward * radius);
-     }
+        return pos;
+    }
+
+    IEnumerator SpawnWaves()
+    {
+        yield return new WaitForSeconds(_timeForNextWave-starField.transitionTime);
+        starField.GoIntoSpaceMode();
+        yield return new WaitForSeconds(starField.transitionTime);
+        //After the first two minutes, we will send waves once per minute
+        _timeForNextWave = 40.0f;
+        while (true)
+        {
+            List<GameObject> activeMeteors = new List<GameObject>();
+
+            for (int i = 0; i < _meteoriteCount; i++)
+            {
+                activeMeteors.Add(Spawn());
+                yield return new WaitForSeconds(_timeBetweenMeteorites);
+            }
+
+            while (true)
+            {
+                int count = activeMeteors.Count;
+
+                foreach (GameObject go in activeMeteors)
+                {
+                    if (go == null)
+                    {
+                        --count;
+                    }
+                }
+
+                if (count == 0)
+                    break;
+
+                yield return null;
+            }
+
+            starField.GoIntoHouseMode();
+
+            //Next wave will have two more meteorites
+            _meteoriteCount += 2;
+            yield return new WaitForSeconds(_timeForNextWave - starField.transitionTime);
+            starField.GoIntoSpaceMode();
+            yield return new WaitForSeconds(starField.transitionTime);
+        }
+    }
 }

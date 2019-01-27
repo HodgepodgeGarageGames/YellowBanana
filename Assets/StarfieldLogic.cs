@@ -6,11 +6,13 @@ public class StarfieldLogic : MonoBehaviour
 {
     public AudioClip house_music;
     public AudioClip space_music;
+    public AudioClip alarm_sound;
     private Material mat;
     private AudioSource houseSource;
     private AudioSource spaceSource;
+    private AudioSource alarmSource;
 
-    private const float transitionTime = 3.0f;
+    public float transitionTime = 3.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +33,11 @@ public class StarfieldLogic : MonoBehaviour
         spaceSource.playOnAwake = false;
         spaceSource.volume = 0.0f;
         spaceSource.Play();
+
+        alarmSource = gameObject.AddComponent<AudioSource>();
+        alarmSource.clip = alarm_sound;
+        alarmSource.loop = false;
+        alarmSource.playOnAwake = false;
     }
 
     public void GoIntoSpaceMode()
@@ -55,6 +62,8 @@ public class StarfieldLogic : MonoBehaviour
         mat.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         houseSource.volume = 0.0f;
         spaceSource.volume = 1.0f;
+
+        alarmSource.Play();
     }
 
     public void GoIntoHouseMode()
