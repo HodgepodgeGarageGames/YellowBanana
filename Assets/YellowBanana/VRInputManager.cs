@@ -15,6 +15,30 @@ public class VRInputManager : MonoBehaviour
     public SteamVR_Action_Vector2 trackPadAction;
 
     public LampLogic lamp;
+    public MeteoriteSpawner spawner;
+    public EndFieldLogic endField;
+    public Light spotLight;
+    public AudioClip sadMusic;
+    public AudioClip clunk;
+    private AudioSource sadMusicSource;
+    private AudioSource clunkSource;
+
+    private Coroutine coEnd = null;
+
+    void Start()
+    {
+        MeepleManager.allMeeples = GameObject.FindGameObjectsWithTag("Meeple");
+
+        sadMusicSource = gameObject.AddComponent<AudioSource>();
+        sadMusicSource.clip = sadMusic;
+        sadMusicSource.playOnAwake = false;
+        sadMusicSource.loop = false;
+
+        clunkSource = gameObject.AddComponent<AudioSource>();
+        clunkSource.clip = clunk;
+        clunkSource.playOnAwake = false;
+        clunkSource.loop = false;
+    }
 
     // Update is called once per frame
     void Update()
@@ -66,5 +90,35 @@ public class VRInputManager : MonoBehaviour
         {
             Application.Quit();
         }
+
+        if (coEnd == null)
+        {
+            int mCount = MeepleManager.allMeeples.Length;
+            foreach (GameObject meeple in MeepleManager.allMeeples)
+            {
+                if (meeple.GetComponent<MeepleTemperature>().isDead())
+                {
+                    --mCount;
+                }
+            }
+            if (mCount == 0)
+            {
+                coEnd = StartCoroutine(EndState());
+            }
+        }
+    }
+
+    private IEnumerator EndState()
+    {
+        Debug.Log("End state started");
+        spawner.gameObject.SetActive(false);
+        endField.GoToEndState();
+        lampLight.intensity = 0.0f;
+        lampLight.range = 0.0f;
+        yield return new WaitForSeconds(endField.transitionTime);
+        sadMusicSource.Play();
+        yield return new WaitForSeconds(1.0f);
+        clunkSource.Play();
+        spotLight.gameObject.SetActive(true);
     }
 }

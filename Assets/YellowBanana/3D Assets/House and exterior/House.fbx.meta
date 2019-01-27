@@ -14,6 +14,7 @@ ModelImporter:
     100016: Walls
     100018: God poster.001
     100020: Meteor poster.001
+    100022: Trackpad poster
     400000: Cat poster
     400002: Ceiling
     400004: Cylinder
@@ -25,6 +26,7 @@ ModelImporter:
     400016: Walls
     400018: God poster.001
     400020: Meteor poster.001
+    400022: Trackpad poster
     2100000: Material.001
     2100002: No Name
     2100004: Material.002
@@ -38,6 +40,8 @@ ModelImporter:
     2100020: Trackpad poster
     2100022: God poster
     2100024: Meteors2
+    2100026: WallpaperPink
+    2100028: God meteor
     2300000: Cat poster
     2300002: Ceiling
     2300004: Cylinder
@@ -48,6 +52,7 @@ ModelImporter:
     2300014: Walls
     2300016: God poster.001
     2300018: Meteor poster.001
+    2300020: Trackpad poster
     3300000: Cat poster
     3300002: Ceiling
     3300004: Cylinder
@@ -58,6 +63,7 @@ ModelImporter:
     3300014: Walls
     3300016: God poster.001
     3300018: Meteor poster.001
+    3300020: Trackpad poster
     4300000: Cylinder
     4300002: Plane
     4300004: Cat poster
@@ -68,6 +74,7 @@ ModelImporter:
     4300014: Walls
     4300016: God poster.001
     4300018: Meteor poster.001
+    4300020: Trackpad poster
   externalObjects: {}
   materials:
     importMaterials: 1

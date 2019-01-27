@@ -8,11 +8,17 @@ public class StarfieldLogic : MonoBehaviour
     public AudioClip space_music;
     public AudioClip alarm_sound;
     private Material mat;
-    private AudioSource houseSource;
-    private AudioSource spaceSource;
-    private AudioSource alarmSource;
+    [HideInInspector]
+    public AudioSource houseSource;
+    [HideInInspector]
+    public AudioSource spaceSource;
+    [HideInInspector]
+    public AudioSource alarmSource;
 
     public float transitionTime = 3.0f;
+
+    public Coroutine co_to_space = null;
+    public Coroutine co_to_house = null;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +48,7 @@ public class StarfieldLogic : MonoBehaviour
 
     public void GoIntoSpaceMode()
     {
-        StartCoroutine(go_into_space_mode());
+        co_to_space = StartCoroutine(go_into_space_mode());
     }
 
     private IEnumerator go_into_space_mode()
@@ -64,11 +70,13 @@ public class StarfieldLogic : MonoBehaviour
         spaceSource.volume = 1.0f;
 
         alarmSource.Play();
+
+        co_to_space = null;
     }
 
     public void GoIntoHouseMode()
     {
-        StartCoroutine(go_into_house_mode());
+        co_to_house = StartCoroutine(go_into_house_mode());
     }
 
     private IEnumerator go_into_house_mode()
@@ -88,5 +96,7 @@ public class StarfieldLogic : MonoBehaviour
         mat.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         houseSource.volume = 1.0f;
         spaceSource.volume = 0.0f;
+
+        co_to_house = null;
     }
 }

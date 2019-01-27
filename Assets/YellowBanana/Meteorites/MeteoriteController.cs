@@ -83,6 +83,10 @@ public class MeteoriteController : MonoBehaviour
             {
                 meep.get_hit_by_meteor();
             }
+            foreach (GameObject meep in MeepleManager.allMeeples)
+            {
+                meep.GetComponent<MeepleTemperature>().get_indirectly_hit_by_meteor();
+            }
 
             Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);

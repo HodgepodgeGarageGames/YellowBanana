@@ -7,6 +7,7 @@ TagManager:
   - projectile
   - FxTemporaire
   - Meteor
+  - Meeple
   layers:
   - Default
   - TransparentFX
