@@ -116,9 +116,10 @@ public class VRInputManager : MonoBehaviour
         lampLight.intensity = 0.0f;
         lampLight.range = 0.0f;
         yield return new WaitForSeconds(endField.transitionTime);
-        sadMusicSource.Play();
         yield return new WaitForSeconds(1.0f);
         clunkSource.Play();
+        yield return new WaitForSeconds(1.0f);
+        sadMusicSource.Play();
         spotLight.gameObject.SetActive(true);
     }
 }
