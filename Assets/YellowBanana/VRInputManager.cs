@@ -25,6 +25,8 @@ public class VRInputManager : MonoBehaviour
 
     private Coroutine coEnd = null;
 
+    public GoalLogic goalGraphic;
+
     void Start()
     {
         MeepleManager.allMeeples = GameObject.FindGameObjectsWithTag("Meeple");
@@ -122,6 +124,8 @@ public class VRInputManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         sadMusicSource.Play();
         yield return new WaitForSeconds(4.0f);
+
+        goalGraphic.GameOver();
 
         float T = 0.0f;
         float spotInt = spotLight.intensity;

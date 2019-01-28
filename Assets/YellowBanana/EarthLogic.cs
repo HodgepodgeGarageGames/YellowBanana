@@ -27,8 +27,20 @@ public class EarthLogic : MonoBehaviour
 
                 if (!audioSource.isPlaying)
                 {
-                    audioSource.clip = woah[Random.Range(0, woah.Length)];
-                    audioSource.Play();
+                    int mCount = MeepleManager.allMeeples.Length;
+                    foreach (GameObject meeple in MeepleManager.allMeeples)
+                    {
+                        if (meeple.GetComponent<MeepleTemperature>().isDead())
+                        {
+                            --mCount;
+                        }
+                    }
+                    if (mCount > 4)
+                    {
+                        audioSource.clip = woah[Random.Range(0, woah.Length)];
+                        audioSource.Play();
+                    }
+                    
                 }
             }
         }
