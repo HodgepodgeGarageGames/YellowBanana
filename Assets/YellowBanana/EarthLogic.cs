@@ -19,7 +19,7 @@ public class EarthLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rb.angularVelocity.magnitude > 5.0f)
+        if (rb.angularVelocity.magnitude > 4.0f)
         {
             if (isGoingTooFast == false)
             {

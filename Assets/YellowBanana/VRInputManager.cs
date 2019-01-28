@@ -118,8 +118,28 @@ public class VRInputManager : MonoBehaviour
         yield return new WaitForSeconds(endField.transitionTime);
         yield return new WaitForSeconds(1.0f);
         clunkSource.Play();
+        spotLight.gameObject.SetActive(true);
         yield return new WaitForSeconds(1.0f);
         sadMusicSource.Play();
-        spotLight.gameObject.SetActive(true);
+        yield return new WaitForSeconds(4.0f);
+
+        float T = 0.0f;
+        float spotInt = spotLight.intensity;
+
+        while (T < 10.0f)
+        {
+            spotLight.spotAngle = 30.0f - (30.0f * (T / 10.0f));
+
+            if (T > 3.0f)
+            {
+                spotLight.intensity = spotInt * (1.0f - ((T - 3.0f) / 6.0f));
+            }
+
+            yield return null;
+            T += Time.deltaTime;
+        }
+
+        spotLight.spotAngle = 0.0f;
+        spotLight.intensity = 0.0f;
     }
 }

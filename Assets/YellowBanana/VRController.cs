@@ -32,6 +32,7 @@ public class VRController : MonoBehaviour
             if (go.Grab(this))
             {
                 currentlyGrabbedObject = go;
+                break;
             }
         }
     }
