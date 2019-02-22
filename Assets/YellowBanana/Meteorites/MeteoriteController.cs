@@ -49,7 +49,7 @@ public class MeteoriteController : MonoBehaviour
         Globe = GameObject.Find("Globe");
         _audioSource = GetComponent<AudioSource>();
 
-        targetOffset = Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f) * Quaternion.Euler(0.0f, 0.0f, Random.Range(-45.0f, 90.0f)) * -Vector3.left * Random.Range(0.0f, 1.0f);
+        targetOffset = Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f) * Quaternion.Euler(0.0f, 0.0f, Random.Range(-45.0f, 90.0f)) * -Vector3.left * Random.Range(0.0f, 0.6f);
     }
 
     // Update is called once per frame
@@ -61,7 +61,11 @@ public class MeteoriteController : MonoBehaviour
 
         //Meteorite Movement
         float step =  MovingSpeed * Time.deltaTime; // calculate distance to move
-        transform.position = Vector3.MoveTowards(transform.position, Globe.transform.position + targetOffset, step);
+
+        if (Vector3.Distance(transform.position, Globe.transform.position + targetOffset) < step)
+            InstantDeath();
+        else
+            transform.position = Vector3.MoveTowards(transform.position, Globe.transform.position + targetOffset, step);
 
         //If we are close enough to Globe
         float dist = Vector3.Distance(Globe.transform.position, transform.position);
@@ -86,29 +90,33 @@ public class MeteoriteController : MonoBehaviour
                 meep.GetComponent<MeepleTemperature>().get_indirectly_hit_by_meteor();
             }
 
-            if (transform.childCount > 0)
-            {
-                Transform trailParticleSystem = transform.GetChild(0);
-                trailParticleSystem.SetParent(Spawner.transform, true);
-                trailParticleSystem.localScale = new Vector3(
-                    trailParticleSystem.localScale.x / transform.localScale.x,
-                    trailParticleSystem.localScale.y / transform.localScale.y,
-                    trailParticleSystem.localScale.z / transform.localScale.z);
-                ParticleSystem parsys = trailParticleSystem.GetComponent<ParticleSystem>();
-                ParticleSystem.MainModule mainmod = parsys.main;
-                mainmod.loop = false;
-                ParticleSystem.EmissionModule emmod = parsys.emission;                
-                emmod.rateOverTime = new ParticleSystem.MinMaxCurve(0.0f);
-
-            }
-
-            Instantiate(explosion, transform.position, transform.rotation);
-            Destroy(gameObject);
+            InstantDeath();
         }
         else
         {
             StartCoroutine(TimedDeath());
         }
+    }
+
+    private void InstantDeath()
+    {
+        if (transform.childCount > 0)
+        {
+            Transform trailParticleSystem = transform.GetChild(0);
+            trailParticleSystem.SetParent(Spawner.transform, true);
+            trailParticleSystem.localScale = new Vector3(
+                trailParticleSystem.localScale.x / transform.localScale.x,
+                trailParticleSystem.localScale.y / transform.localScale.y,
+                trailParticleSystem.localScale.z / transform.localScale.z);
+            ParticleSystem parsys = trailParticleSystem.GetComponent<ParticleSystem>();
+            ParticleSystem.MainModule mainmod = parsys.main;
+            mainmod.loop = false;
+            ParticleSystem.EmissionModule emmod = parsys.emission;
+            emmod.rateOverTime = new ParticleSystem.MinMaxCurve(0.0f);
+        }
+
+        Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 
     private IEnumerator TimedDeath()
