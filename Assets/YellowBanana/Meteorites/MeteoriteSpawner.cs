@@ -9,13 +9,10 @@ public class MeteoriteSpawner : MonoBehaviour
     public int RotationSpeed;
     public float MovingSpeed;
     public StarfieldLogic starField;
-    private float _timeForNextWave = 20.0f;
+    public GameObject globe;
+    private float _timeForNextWave = 60.0f;
     private float _meteoriteCount = 2;
     private float _timeBetweenMeteorites = 1.0f;
-    private float MinXPosition = -3f;
-    private float MaxXPosition = 3f;
-    private float MinZPosition = -3.0f;
-    private float MaxZPosition = 3.0f;
 
     void Start()
     {
@@ -24,27 +21,21 @@ public class MeteoriteSpawner : MonoBehaviour
 
     private GameObject Spawn()
     {
-        Vector3 position = RandomPoint(transform.position, 5.0f);
+        Vector3 position = RandomPoint(globe.transform.position, 5.0f);
         Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, transform.position - position);
         var meteorite = Instantiate(Meteorite, position, rotation) as GameObject;
 
         var controller = meteorite.GetComponent<MeteoriteController>();
         controller.RotationSpeed = RotationSpeed;
         controller.MovingSpeed = MovingSpeed;
+        controller.Spawner = this;
 
         return meteorite;
     }
 
     Vector3 RandomPoint(Vector3 center, float radius)
     {
-        float ang = Random.value * 360;
-        Vector3 pos;
-
-        pos.x = Random.Range(MinXPosition, MaxXPosition);
-        pos.y = 4;
-        pos.z = Random.Range(MinZPosition, MaxZPosition);
-
-        return pos;
+        return center + (Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f) * Quaternion.Euler(0.0f, 0.0f, Random.Range(-45.0f, 90.0f)) * -Vector3.left * radius);
     }
 
     IEnumerator SpawnWaves()
@@ -53,7 +44,7 @@ public class MeteoriteSpawner : MonoBehaviour
         starField.GoIntoSpaceMode();
         yield return new WaitForSeconds(starField.transitionTime);
         //After the first two minutes, we will send waves once per minute
-        _timeForNextWave = 40.0f;
+        _timeForNextWave = 25.0f;
         while (true)
         {
             List<GameObject> activeMeteors = new List<GameObject>();
@@ -86,6 +77,9 @@ public class MeteoriteSpawner : MonoBehaviour
 
             //Next wave will have two more meteorites
             _meteoriteCount += 2;
+            //Next wave will also spawn meteorites faster
+            _timeBetweenMeteorites *= 0.9f;
+
             yield return new WaitForSeconds(_timeForNextWave - starField.transitionTime);
             starField.GoIntoSpaceMode();
             yield return new WaitForSeconds(starField.transitionTime);

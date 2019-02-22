@@ -7,11 +7,13 @@ public class MeteoriteController : MonoBehaviour
     public GameObject explosion;
     public int RotationSpeed;
     public float MovingSpeed;
+    public MeteoriteSpawner Spawner;
     private Vector3 _leftOrRight;
     private Vector3 _upOrDown;
     private GameObject Globe;
     private AudioSource _audioSource;
-    bool isplaying = false;
+    private bool isplaying = false;
+    private Vector3 targetOffset;
 
     private List<MeepleTemperature> hotList = new List<MeepleTemperature>();
 
@@ -31,12 +33,6 @@ public class MeteoriteController : MonoBehaviour
         }
     }
 
-    void Initialize(int rotationSpeed, int movingSpeed)
-    {
-        RotationSpeed = rotationSpeed;
-        MovingSpeed = movingSpeed;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +48,8 @@ public class MeteoriteController : MonoBehaviour
         }
         Globe = GameObject.Find("Globe");
         _audioSource = GetComponent<AudioSource>();
+
+        targetOffset = Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f) * Quaternion.Euler(0.0f, 0.0f, Random.Range(-45.0f, 90.0f)) * -Vector3.left * Random.Range(0.0f, 1.0f);
     }
 
     // Update is called once per frame
@@ -63,7 +61,7 @@ public class MeteoriteController : MonoBehaviour
 
         //Meteorite Movement
         float step =  MovingSpeed * Time.deltaTime; // calculate distance to move
-        transform.position = Vector3.MoveTowards(transform.position, Globe.transform.position, step);
+        transform.position = Vector3.MoveTowards(transform.position, Globe.transform.position + targetOffset, step);
 
         //If we are close enough to Globe
         float dist = Vector3.Distance(Globe.transform.position, transform.position);
@@ -86,6 +84,22 @@ public class MeteoriteController : MonoBehaviour
             foreach (GameObject meep in MeepleManager.allMeeples)
             {
                 meep.GetComponent<MeepleTemperature>().get_indirectly_hit_by_meteor();
+            }
+
+            if (transform.childCount > 0)
+            {
+                Transform trailParticleSystem = transform.GetChild(0);
+                trailParticleSystem.SetParent(Spawner.transform, true);
+                trailParticleSystem.localScale = new Vector3(
+                    trailParticleSystem.localScale.x / transform.localScale.x,
+                    trailParticleSystem.localScale.y / transform.localScale.y,
+                    trailParticleSystem.localScale.z / transform.localScale.z);
+                ParticleSystem parsys = trailParticleSystem.GetComponent<ParticleSystem>();
+                ParticleSystem.MainModule mainmod = parsys.main;
+                mainmod.loop = false;
+                ParticleSystem.EmissionModule emmod = parsys.emission;                
+                emmod.rateOverTime = new ParticleSystem.MinMaxCurve(0.0f);
+
             }
 
             Instantiate(explosion, transform.position, transform.rotation);

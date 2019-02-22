@@ -1,0 +1,219 @@
+fileFormatVersion: 2
+guid: 4dec43c1207996a499203fe4991d6966
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Cat poster
+    100002: Ceiling
+    100004: Cylinder
+    100006: Floor
+    100008: God poster
+    100010: //RootNode
+    100012: Meteor poster
+    100014: Plane
+    100016: Walls
+    100018: God poster.001
+    100020: Meteor poster.001
+    100022: Trackpad poster
+    100024: Bowl
+    100026: Chair
+    100028: Chair legs
+    100030: Door
+    100032: Doorknob
+    100034: Photos
+    100036: Photos.002
+    100038: Planter
+    100040: Walls.002
+    100042: Walls.003
+    400000: Cat poster
+    400002: Ceiling
+    400004: Cylinder
+    400006: Floor
+    400008: God poster
+    400010: //RootNode
+    400012: Meteor poster
+    400014: Plane
+    400016: Walls
+    400018: God poster.001
+    400020: Meteor poster.001
+    400022: Trackpad poster
+    400024: Bowl
+    400026: Chair
+    400028: Chair legs
+    400030: Door
+    400032: Doorknob
+    400034: Photos
+    400036: Photos.002
+    400038: Planter
+    400040: Walls.002
+    400042: Walls.003
+    2100000: Material.001
+    2100002: No Name
+    2100004: Material.002
+    2100006: Material.007
+    2100008: Material.005
+    2100010: Material.003
+    2100012: Material.004
+    2100014: Material.006
+    2100016: Koban poster
+    2100018: Earth People poster
+    2100020: Trackpad poster
+    2100022: God poster
+    2100024: Meteors2
+    2100026: WallpaperPink
+    2100028: God meteor
+    2100030: Doorknob
+    2100032: Chair legs
+    2100034: Plant
+    2100036: Planter
+    2100038: Door
+    2100040: Pictures material
+    2300000: Cat poster
+    2300002: Ceiling
+    2300004: Cylinder
+    2300006: Floor
+    2300008: God poster
+    2300010: Meteor poster
+    2300012: Plane
+    2300014: Walls
+    2300016: God poster.001
+    2300018: Meteor poster.001
+    2300020: Trackpad poster
+    2300022: Bowl
+    2300024: Chair
+    2300026: Chair legs
+    2300028: Door
+    2300030: Doorknob
+    2300032: Photos
+    2300034: Photos.002
+    2300036: Planter
+    2300038: Walls.002
+    2300040: Walls.003
+    3300000: Cat poster
+    3300002: Ceiling
+    3300004: Cylinder
+    3300006: Floor
+    3300008: God poster
+    3300010: Meteor poster
+    3300012: Plane
+    3300014: Walls
+    3300016: God poster.001
+    3300018: Meteor poster.001
+    3300020: Trackpad poster
+    3300022: Bowl
+    3300024: Chair
+    3300026: Chair legs
+    3300028: Door
+    3300030: Doorknob
+    3300032: Photos
+    3300034: Photos.002
+    3300036: Planter
+    3300038: Walls.002
+    3300040: Walls.003
+    4300000: Cylinder
+    4300002: Plane
+    4300004: Cat poster
+    4300006: Ceiling
+    4300008: Floor
+    4300010: God poster
+    4300012: Meteor poster
+    4300014: Walls
+    4300016: God poster.001
+    4300018: Meteor poster.001
+    4300020: Trackpad poster
+    4300022: Bowl
+    4300024: Chair legs
+    4300026: Chair
+    4300028: Photos.002
+    4300030: Planter
+    4300032: Walls.003
+    4300034: Walls.002
+    4300036: Door
+    4300038: Doorknob
+    4300040: Photos
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

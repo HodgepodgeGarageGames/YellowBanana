@@ -45,7 +45,6 @@ public class EndFieldLogic : MonoBehaviour
             float ratio = T / starfield.transitionTime;
 
             mat.color = new Color(0.0f, 0.0f, 0.0f, ratio);
-            Debug.Log(mat.color);
 
             yield return null;
             T += Time.deltaTime;

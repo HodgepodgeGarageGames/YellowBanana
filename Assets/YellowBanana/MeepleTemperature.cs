@@ -13,7 +13,7 @@ public class MeepleTemperature : MonoBehaviour
     private float spawn_timer = 0.0f;
 
     private const float cooldown_rate = 0.03f;
-    private const float heatup_rate = 0.7f;
+    private const float heatup_rate = 1.0f;
 
     private ParticleSystem smoke;
 
